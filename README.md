@@ -29,11 +29,12 @@ Find us at:
 
 # [linuxserver/sonarr](https://github.com/linuxserver/docker-sonarr)
 
+[![Scarf.io pulls](https://scarf.sh/installs-badge/linuxserver-ci/linuxserver%2Fsonarr?color=94398d&label-color=555555&logo-color=ffffff&style=for-the-badge&package-type=docker)](https://scarf.sh/gateway/linuxserver-ci/docker/linuxserver%2Fsonarr)
 [![GitHub Stars](https://img.shields.io/github/stars/linuxserver/docker-sonarr.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/linuxserver/docker-sonarr)
 [![GitHub Release](https://img.shields.io/github/release/linuxserver/docker-sonarr.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/linuxserver/docker-sonarr/releases)
 [![GitHub Package Repository](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=GitHub%20Package&logo=github)](https://github.com/linuxserver/docker-sonarr/packages)
 [![GitLab Container Registry](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=GitLab%20Registry&logo=gitlab)](https://gitlab.com/linuxserver.io/docker-sonarr/container_registry)
-[![MicroBadger Layers](https://img.shields.io/microbadger/layers/linuxserver/sonarr.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge)](https://microbadger.com/images/linuxserver/sonarr "Get your own version badge on microbadger.com")
+[![Quay.io](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=Quay.io)](https://quay.io/repository/linuxserver.io/sonarr)
 [![Docker Pulls](https://img.shields.io/docker/pulls/linuxserver/sonarr.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=pulls&logo=docker)](https://hub.docker.com/r/linuxserver/sonarr)
 [![Docker Stars](https://img.shields.io/docker/stars/linuxserver/sonarr.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=stars&logo=docker)](https://hub.docker.com/r/linuxserver/sonarr)
 [![Jenkins Build](https://img.shields.io/jenkins/build?labelColor=555555&logoColor=ffffff&style=for-the-badge&jobUrl=https%3A%2F%2Fci.linuxserver.io%2Fjob%2FDocker-Pipeline-Builders%2Fjob%2Fdocker-sonarr%2Fjob%2Fmaster%2F&logo=jenkins)](https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-sonarr/job/master/)
@@ -45,28 +46,26 @@ Find us at:
 
 ## Supported Architectures
 
-Our images support multiple architectures such as `x86-64`, `arm64` and `armhf`. We utilise the docker manifest for multi-platform awareness. More information is available from docker [here](https://github.com/docker/distribution/blob/master/docs/spec/manifest-v2-2.md#manifest-list) and our announcement [here](https://blog.linuxserver.io/2019/02/21/the-lsio-pipeline-project/).
+We utilise the docker manifest for multi-platform awareness. More information is available from docker [here](https://github.com/docker/distribution/blob/master/docs/spec/manifest-v2-2.md#manifest-list) and our announcement [here](https://blog.linuxserver.io/2019/02/21/the-lsio-pipeline-project/).
 
-Simply pulling `ghcr.io/linuxserver/sonarr` should retrieve the correct image for your arch, but you can also pull specific arch images via tags.
+Simply pulling `lscr.io/linuxserver/sonarr:latest` should retrieve the correct image for your arch, but you can also pull specific arch images via tags.
 
 The architectures supported by this image are:
 
-| Architecture | Tag |
-| :----: | --- |
-| x86-64 | amd64-latest |
-| arm64 | arm64v8-latest |
-| armhf | arm32v7-latest |
+| Architecture | Available | Tag |
+| :----: | :----: | ---- |
+| x86-64 | ✅ | amd64-\<version tag\> |
+| arm64 | ✅ | arm64v8-\<version tag\> |
+| armhf| ❌ | |
 
 ## Version Tags
 
-This image provides various versions that are available via tags. `latest` tag usually provides the latest stable version. Others are considered under development and caution must be exercised when using them.
+This image provides various versions that are available via tags. Please read the descriptions carefully and exercise caution when using unstable or development tags.
 
-| Tag | Description |
-| :----: | --- |
-| latest | Stable releases from Sonarr (currently v3) |
-| develop | Development releases from Sonarr (currently v3) |
-| preview | DEPRECATED - Preview releases from Sonarr (currently v3) |
-| 5.14 | DEPRECATED - Stable Sonarr releases, but run on Mono 5.14 |
+| Tag | Available | Description |
+| :----: | :----: |--- |
+| latest | ✅ | Stable releases from Sonarr (currently v3) |
+| develop | ✅ | Development releases from Sonarr (currently v4) |
 
 ## Application Setup
 
@@ -84,16 +83,14 @@ The folks over at servarr.com wrote a good [write-up](https://wiki.servarr.com/D
 
 Here are some example snippets to help you get started creating a container.
 
-### docker-compose ([recommended](https://docs.linuxserver.io/general/docker-compose))
-
-Compatible with docker-compose v2 schemas.
+### docker-compose (recommended, [click here for more info](https://docs.linuxserver.io/general/docker-compose))
 
 ```yaml
 ---
 version: "2.1"
 services:
   sonarr:
-    image: ghcr.io/linuxserver/sonarr
+    image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
     environment:
       - PUID=1000
@@ -108,7 +105,7 @@ services:
     restart: unless-stopped
 ```
 
-### docker cli
+### docker cli ([click here for more info](https://docs.docker.com/engine/reference/commandline/cli/))
 
 ```bash
 docker run -d \
@@ -121,7 +118,7 @@ docker run -d \
   -v /path/to/tvseries:/tv `#optional` \
   -v /path/to/downloadclient-downloads:/downloads `#optional` \
   --restart unless-stopped \
-  ghcr.io/linuxserver/sonarr
+  lscr.io/linuxserver/sonarr:latest
 ```
 
 ## Parameters
@@ -181,7 +178,7 @@ We publish various [Docker Mods](https://github.com/linuxserver/docker-mods) to 
 * container version number
   * `docker inspect -f '{{ index .Config.Labels "build_version" }}' sonarr`
 * image version number
-  * `docker inspect -f '{{ index .Config.Labels "build_version" }}' ghcr.io/linuxserver/sonarr`
+  * `docker inspect -f '{{ index .Config.Labels "build_version" }}' lscr.io/linuxserver/sonarr:latest`
 
 ## Updating Info
 
@@ -199,7 +196,7 @@ Below are the instructions for updating containers:
 
 ### Via Docker Run
 
-* Update the image: `docker pull ghcr.io/linuxserver/sonarr`
+* Update the image: `docker pull lscr.io/linuxserver/sonarr:latest`
 * Stop the running container: `docker stop sonarr`
 * Delete the container: `docker rm sonarr`
 * Recreate a new container with the same docker run parameters as instructed above (if mapped correctly to a host folder, your `/config` folder and settings will be preserved)
@@ -234,7 +231,7 @@ cd docker-sonarr
 docker build \
   --no-cache \
   --pull \
-  -t ghcr.io/linuxserver/sonarr:latest .
+  -t lscr.io/linuxserver/sonarr:latest .
 ```
 
 The ARM variants can be built on x86_64 hardware using `multiarch/qemu-user-static`
@@ -247,6 +244,12 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **24.11.22:** - Bump develop branch to v4, rebase to Alpine 3.16.
+* **03.08.22:** - Deprecate armhf.
+* **02.08.22:** - Add armhf deprecation warning.
+* **28.04.22:** - Rebase master branch to mono 6.12 base (focal).
+* **20.02.22:** - Rebase develop branch to Alpine, deprecate develop-alpine branch.
+* **28.12.21:** - Add develop-alpine branch.
 * **11.05.21:** - Make the paths clearer to the user.
 * **10.03.21:** - Upgrade to Sonarr v3. Existing users are highly recommended to make a backup prior to update.
 * **18.01.21:** - Deprecate `UMASK_SET` in favor of UMASK in baseimage, see above for more information.
@@ -262,7 +265,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 * **14.04.17:** - Change to mount /etc/localtime in README, thanks cbgj.
 * **13.04.17:** - Switch to official mono repository.
 * **30.09.16:** - Fix umask
-* **23.09.16:** - Add cd to /opt fixes redirects with althub (issue #25) , make XDG config environment variable
+* **23.09.16:** - Add cd to /opt fixes redirects with althub (issue #25), make XDG config environment variable
 * **15.09.16:** - Add libcurl3 package.
 * **09.09.16:** - Add layer badges to README.
 * **27.08.16:** - Add badges to README.
