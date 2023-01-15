@@ -51,6 +51,9 @@ RUN \
 # add local files
 COPY root/ /
 
+# add mount configuration files, if any
+COPY /mount-config /mount-config/
+
 # ports and volumes
 EXPOSE 8989
 VOLUME /config
